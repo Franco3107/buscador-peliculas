@@ -1,7 +1,9 @@
 package com.miempresa.buscadorpeliculas;
 
+
 import com.google.gson.annotations.SerializedName;
 import com.miempresa.buscadorpeliculas.enums.Type;
+import com.miempresa.buscadorpeliculas.exception.PeliculaNoEncontradaException;
 
 public class AudiovisualContent {
 	@SerializedName("Title") // es un atributo para decirle a JSON que el atributo title lo va a encontrar de esa manera
@@ -22,9 +24,13 @@ public class AudiovisualContent {
     private String imdbRating;
     @SerializedName("Poster")
     private String poster;
+    @SerializedName("Error")
+    private String error;
+    @SerializedName("Response")
+    private String response;
 	
 	public AudiovisualContent(String title, String year, String director, String genre, String plot, String actors,
-			Type type, String imdbRating, String poster) {
+			Type type, String imdbRating, String poster, String error, String response) throws PeliculaNoEncontradaException {
 		this.title = title;
 		this.year = year;
 		this.director = director;
@@ -34,6 +40,7 @@ public class AudiovisualContent {
 		this.type = type;
 		this.imdbRating = imdbRating;
 		this.poster = poster;
+		this.response=response;
 	}
 	
 	// GETTER AND SETTER
@@ -91,7 +98,13 @@ public class AudiovisualContent {
 	public void setPoster(String poster) {
 		this.poster = poster;
 	}
-	
+	public String getResponse() {
+		return response;
+	}
+	public void setResponse(String response) {
+		this.response = response;
+	}
+
 	//To String
 	@Override
 	public String toString() {

@@ -6,10 +6,14 @@ import java.util.Properties;
 
 import com.google.gson.Gson;
 import com.miempresa.buscadorpeliculas.AudiovisualContent;
+import com.miempresa.buscadorpeliculas.exception.PeliculaNoEncontradaException;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class OmdbClient {
 
@@ -22,9 +26,8 @@ public class OmdbClient {
     
     
     public String buildURL(String titulo) {
-        return this.baseURL
-                .replace("PELICULA", titulo)
-                .replace("API_KEY", this.apiKey);
+    	String tituloCodificado = URLEncoder.encode(titulo, StandardCharsets.UTF_8);  // modifica el titulo para que no haya errores
+        return this.baseURL.replace("PELICULA", tituloCodificado).replace("API_KEY", this.apiKey);
     }
 	
 	// Metodo para que Java vaya al URL y traiga el Json
@@ -41,13 +44,16 @@ public class OmdbClient {
 	}
 	
 	//Metodo que transforma el Json encontrado en una clase
-	public AudiovisualContent search(String titulo) throws IOException {
+	public AudiovisualContent search(String titulo) throws IOException, PeliculaNoEncontradaException {
 	    String json = fetchData(titulo);
 	    
 	    Gson gson = new Gson();
 	    AudiovisualContent contenido = gson.fromJson(json, AudiovisualContent.class);
-	    
-	    return contenido;
+	    if("False".equals(contenido.getResponse())) {
+	    	throw new PeliculaNoEncontradaException("Pelicula no encontrada");
+	    } else {
+	    	return contenido;
+	    }
 	}
 	private String loadApiKey() {
 	    Properties properties = new Properties();  // creo el "diccionario" vacío
