@@ -108,10 +108,10 @@ public class AudiovisualContent {
 	//To String
 	@Override
 	public String toString() {
-		return "AudiovisualContent [title=" + title + ", year=" + year + ", director=" + director + ", genre=" + genre
-				+ ", plot=" + plot + ", actors=" + actors + ", type=" + type + ", imdbRating=" + imdbRating
-				+ ", poster=" + poster + "]";
-	}
+		return "Title: " + title + "\nYear: " + year + "\nDirector: " + director + "\nGenre: " + genre
+				+ "\nPlot: " + plot + "\nActors: " + actors + "\nType: " + type + "\nImdbRating: " + imdbRating
+				+ "\nPoster: " + poster + "\n";
+	}	
 	
 	
 	

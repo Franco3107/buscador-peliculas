@@ -20,8 +20,12 @@ public class App {
 		        	  System.out.println("Ingresá el título de una película o serie:");
 		        	  scanner.nextLine();
 		        	  String tituloBuscado = scanner.nextLine();
-		        	  AudiovisualContent resultado = client.search(tituloBuscado);
-		        	  System.out.println(resultado);	
+		        	  if(tituloBuscado.isBlank()) {
+		        		  System.out.println("No puede dejar el titulo vacio");
+		        	  } else {
+		        		  AudiovisualContent resultado = client.search(tituloBuscado);
+		        		  System.out.println(resultado);
+		        	  }
 				} catch (IOException e) {
 					System.out.println("Error de conexion");
 				}
